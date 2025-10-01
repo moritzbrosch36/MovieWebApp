@@ -63,12 +63,14 @@ def delete_movie(user_id, movie_id):
 # --- Error Handlers ---
 @app.errorhandler(404)
 def not_found_error(error):
-    return render_template("404.html", message="Sorry, die Seite wurde nicht gefunden."), 404
+    return render_template("404.html",
+                           message="Sorry, the page was not found."), 404
 
 @app.errorhandler(500)
 def internal_error(error):
     # Optional: db.session.rollback() hier, wenn DB-Fehler möglich
-    return render_template("500.html", message="Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut."), 500
+    return render_template("500.html",
+                           message="Something went wrong. Please try again later."), 500
 
 # --- Run App ---
 if __name__ == '__main__':
