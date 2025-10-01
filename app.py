@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, url_for, render_template
 from data_manager import DataManager
 from models import db, User, Movie
 import os
+from datetime import datetime
 
 # --- Flask App Setup ---
 app = Flask(__name__)
@@ -71,6 +72,12 @@ def internal_error(error):
     # Optional: db.session.rollback() hier, wenn DB-Fehler möglich
     return render_template("500.html",
                            message="Something went wrong. Please try again later."), 500
+
+
+@app.context_processor
+def inject_year():
+    return {"year": datetime.now().year}
+
 
 # --- Run App ---
 if __name__ == '__main__':
