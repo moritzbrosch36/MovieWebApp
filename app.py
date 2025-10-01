@@ -34,7 +34,8 @@ def create_user():
 def list_user_movies(user_id):
     user = User.query.get(user_id)
     if not user:
-        return render_template("error.html", message=f"User with ID {user_id} does not exist.")
+        return render_template("error.html",
+                               message=f"User with ID {user_id} does not exist.")
     movies = data_manager.get_movies(user_id)
     return render_template("movies.html", movies=movies, user=user)
 
@@ -43,7 +44,9 @@ def add_movie(user_id):
     title = request.form.get("title")
     result = data_manager.add_movie(title, user_id)
     if "error" in result:
-        return render_template("error.html", message=result["error"], suggestions=result.get("suggestions", []))
+        return render_template("error.html",
+                               message=result["error"],
+                               suggestions=result.get("suggestions", []))
     return redirect(url_for("list_user_movies", user_id=user_id))
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/update', methods=['POST'])
