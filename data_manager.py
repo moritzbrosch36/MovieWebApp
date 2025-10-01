@@ -9,7 +9,7 @@ load_dotenv()
 class DataManager:
     def __init__(self, db_session):
         self.db_session = db_session
-        self.api_key = os.getenv("OMDB_API_KEY")
+        self.api_key = os.getenv("API_KEY")
         self.omdb_url = os.getenv("OMDB_URL")
 
         if not self.api_key or not self.omdb_url:
