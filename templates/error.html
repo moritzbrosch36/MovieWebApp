@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Error</title>
-</head>
-<body>
-    <h1>Error</h1>
-    <p>{{ message }}</p>
+{% extends "base.html" %}
 
-    {% if suggestions %}
-        <h3>Did you mean:</h3>
-        <ul>
-            {% for suggestion in suggestions %}
-                <li>{{ suggestion }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+{% block content %}
+<h1>Error</h1>
+<p>{{ message }}</p>
 
-    <a href="{{ url_for('index') }}">Back to Home</a>
-</body>
-</html>
+{% if suggestions %}
+    <h3>Did you mean:</h3>
+    <ul>
+        {% for suggestion in suggestions %}
+            <li>{{ suggestion }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
+<a href="{{ url_for('index') }}">← Back to Home</a>
+{% endblock %}
