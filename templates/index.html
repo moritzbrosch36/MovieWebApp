@@ -3,6 +3,7 @@
 {% block content %}
 <h1>Users</h1>
 
+{% if users %}
 <ul class="user-list">
     {% for user in users %}
     <li class="user-entry">
@@ -10,6 +11,9 @@
     </li>
     {% endfor %}
 </ul>
+{% else %}
+<p>No users found.</p>
+{% endif %}
 
 <h3>Add New User</h3>
 <form action="{{ url_for('create_user') }}" method="post">

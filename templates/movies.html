@@ -3,6 +3,7 @@
 {% block content %}
 <h2>{{ user.name }}'s Favorite Movies</h2>
 
+{% if movies %}
 <ul class="movie-list">
     {% for movie in movies %}
         <li class="movie-entry">
@@ -19,10 +20,11 @@
                 <button type="submit">Delete</button>
             </form>
         </li>
-    {% else %}
-        <li>No movies found for this user.</li>
     {% endfor %}
 </ul>
+{% else %}
+<p>No movies found for this user.</p>
+{% endif %}
 
 <h3>Add Movie</h3>
 <form action="{{ url_for('add_movie', user_id=user.id) }}" method="post">
