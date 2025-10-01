@@ -36,10 +36,11 @@ def get_user_movies(user_id):
 
 # --- Run App ---
 if __name__ == '__main__':
-    # Create the tables on first start
+    """
+    Only use once at the start.
     with app.app_context():
         db.create_all()
-
+    """
     app.run(debug=True)
 
 
