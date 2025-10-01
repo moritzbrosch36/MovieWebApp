@@ -7,7 +7,8 @@ import os
 app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/movies.db')}"
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    f"sqlite:///{os.path.join(basedir, 'data/movies.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -30,7 +31,8 @@ def create_user():
     result = data_manager.create_user(name)
 
     if "error" in result:
-        return render_template("error.html", message=result["error"])
+        return render_template("error.html",
+                               message=result["error"])
 
     return redirect(url_for("index"))
 
@@ -41,10 +43,12 @@ def list_user_movies(user_id):
     user = User.query.get(user_id)
 
     if not user:
-        return render_template("error.html", message=f"User with ID {user_id} does not exist.")
+        return render_template("error.html",
+                               message=f"User with ID {user_id} does not exist.")
 
     movies = data_manager.get_movies(user_id)
-    return render_template("movies.html", movies=movies, user=user)
+    return render_template("movies.html",
+                           movies=movies, user=user)
 
 
 @app.route('/users/<int:user_id>/movies', methods=['POST'])
@@ -54,7 +58,9 @@ def add_movie(user_id):
     result = data_manager.add_movie(title, user_id)
 
     if "error" in result:
-        return render_template("error.html", message=result["error"], suggestions=result.get("suggestions", []))
+        return render_template("error.html",
+                               message=result["error"],
+                               suggestions=result.get("suggestions", []))
 
     return redirect(url_for("list_user_movies", user_id=user_id))
 
