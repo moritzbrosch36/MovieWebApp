@@ -25,8 +25,9 @@ def home():
 # Example route: Show all users
 @app.route('/users')
 def get_users():
+    """List all users as a simple string output (temporary)."""
     users = data_manager.get_users()
-    return {u.id: u.name for u in users}
+    return str(users)
 
 # Example route: Show all movies of a user
 @app.route('/users/<int:user_id>/movies')
