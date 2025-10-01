@@ -7,20 +7,30 @@
 <ul class="movie-list">
     {% for movie in movies %}
     <li class="movie-entry">
-        <h3>{{ movie.title }}</h3>
-        <p><strong>Year:</strong> {{ movie.year }}</p>
-        <p><strong>Genre:</strong> {{ movie.genre }}</p>
+        <div class="movie-poster">
+            {% if movie.poster and movie.poster != "N/A" %}
+                <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster" loading="lazy">
+            {% else %}
+                <img src="{{ url_for('static', filename='no-image.png') }}" alt="No Poster Available">
+            {% endif %}
+        </div>
 
-        <!-- Update Movie -->
-        <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
-            <input type="text" name="new_title" placeholder="New Title" required>
-            <button type="submit">Update</button>
-        </form>
+        <div class="movie-details">
+            <h3>{{ movie.title }}</h3>
+            <p><strong>Year:</strong> {{ movie.year }}</p>
+            <p><strong>Genre:</strong> {{ movie.genre }}</p>
 
-        <!-- Delete Movie -->
-        <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
-            <button type="submit">Delete</button>
-        </form>
+            <!-- Update Movie -->
+            <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
+                <input type="text" name="new_title" placeholder="New Title" required>
+                <button type="submit">Update</button>
+            </form>
+
+            <!-- Delete Movie -->
+            <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
     </li>
     {% endfor %}
 </ul>
