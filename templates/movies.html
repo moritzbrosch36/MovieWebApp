@@ -3,18 +3,24 @@
 {% block content %}
 <h2>{{ user.name }}'s Favorite Movies</h2>
 
-<ul>
+<ul class="movie-list">
     {% for movie in movies %}
-        <li>
+        <li class="movie-entry">
             <strong>{{ movie.title }}</strong> ({{ movie.year }}) — {{ movie.genre }}
+
+            <!-- Update Movie -->
             <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post" style="display:inline;">
                 <input type="text" name="new_title" placeholder="New Title" required>
                 <button type="submit">Update</button>
             </form>
+
+            <!-- Delete Movie -->
             <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </li>
+    {% else %}
+        <li>No movies found for this user.</li>
     {% endfor %}
 </ul>
 
@@ -24,5 +30,6 @@
     <button type="submit">Add Movie</button>
 </form>
 
-<a href="{{ url_for('home') }}">← Back to Home</a>
+<br>
+<a href="{{ url_for('index') }}">← Back to Home</a>
 {% endblock %}
