@@ -1,7 +1,5 @@
 import requests
 import os
-
-from django.contrib.sites import requests
 from dotenv import load_dotenv
 from models import db, User, Movie
 
