@@ -5,13 +5,13 @@
 <p>{{ message }}</p>
 
 {% if suggestions %}
-    <h3>Did you mean:</h3>
-    <ul>
-        {% for suggestion in suggestions %}
-            <li>{{ suggestion }}</li>
-        {% endfor %}
-    </ul>
+<h3>Did you mean:</h3>
+<ul>
+    {% for suggestion in suggestions %}
+    <li>{{ suggestion }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
 
-<a href="{{ url_for('index') }}">← Back to Home</a>
+<a href="{{ url_for('index') }}" class="btn">← Back to Home</a>
 {% endblock %}

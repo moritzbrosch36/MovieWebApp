@@ -7,7 +7,11 @@
 <ul class="user-list">
     {% for user in users %}
     <li class="user-entry">
-        <a href="{{ url_for('list_user_movies', user_id=user.id) }}" class="btn">{{ user.name }}</a>
+        <h3>{{ user.name }}</h3>
+        <p>User ID: {{ user.id }}</p>
+        <form action="{{ url_for('list_user_movies', user_id=user.id) }}" method="get">
+            <button type="submit" class="btn">View Movies</button>
+        </form>
     </li>
     {% endfor %}
 </ul>
