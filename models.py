@@ -23,11 +23,10 @@ class Movie(db.Model):
     title = db.Column(db.String(200), nullable=False)
     genre = db.Column(db.String(100))
     year = db.Column(db.Integer)
+    poster = db.Column(db.String(500), nullable=True)
 
     # Connection to User
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     def __repr__(self):
         return f"<Movie {self.title} ({self.year}"
-
-

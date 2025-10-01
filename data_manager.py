@@ -58,6 +58,7 @@ class DataManager:
             title=data.get("Title", "Unknown"),
             genre=data.get("Genre", "Unknown"),
             year=data.get("Year", "Unknown"),
+            poster=data.get("Poster", ""),
             user_id=user_id
         )
 
