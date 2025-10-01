@@ -12,6 +12,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+with app.app_context():
+    db.create_all()
+
 data_manager = DataManager(db.session)
 
 # --- Routes ---
@@ -27,8 +30,11 @@ def index():
 def create_user():
     """Create a new user and redirect to index."""
     name = request.form.get("name")
-    if name:
-        data_manager.create_user(name)
+    result = data_manager.create_user(name)
+
+    if "error" in result:
+        return render_template("error.html", message=result["error"])
+
     return redirect(url_for("index"))
 
 
@@ -37,6 +43,10 @@ def list_user_movies(user_id):
     """Display all movies for a given user."""
     movies = data_manager.get_movies(user_id)
     user = User.query.get(user_id)
+
+    if not user:
+        return render_template("error.html", message=f"User mit ID {user_id} existiert nicht.")
+
     return render_template("movies.html", movies=movies, user=user)
 
 
@@ -44,8 +54,11 @@ def list_user_movies(user_id):
 def add_movie(user_id):
     """Add a movie to the user's favorites."""
     title = request.form.get("title")
-    if title:
-        data_manager.add_movie(title, user_id)
+    result = data_manager.add_movie(title, user_id)
+
+    if "error" in result:
+        return render_template("error.html", message=result["error"], suggestions=result.get("suggestions", []))
+
     return redirect(url_for("list_user_movies", user_id=user_id))
 
 
@@ -53,22 +66,25 @@ def add_movie(user_id):
 def update_movie(user_id, movie_id):
     """Update movie title."""
     new_title = request.form.get("new_title")
-    if new_title:
-        data_manager.update_movie(movie_id, new_title)
+    result = data_manager.update_movie(movie_id, new_title)
+
+    if "error" in result:
+        return render_template("error.html", message=result["error"])
+
     return redirect(url_for("list_user_movies", user_id=user_id))
 
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/delete', methods=['POST'])
 def delete_movie(user_id, movie_id):
     """Delete a movie from user's favorites."""
-    data_manager.delete_movie(movie_id)
+    result = data_manager.delete_movie(movie_id)
+
+    if "error" in result:
+        return render_template("error.html", message=result["error"])
+
     return redirect(url_for("list_user_movies", user_id=user_id))
 
 
 # --- Run App ---
 if __name__ == '__main__':
-    """
-    with app.app_context():
-        db.create_all()
-    """
     app.run(debug=True)
