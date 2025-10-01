@@ -1,26 +1,47 @@
-from flask import Flask, render_template, request, redirect, url_for
-from models import db
+from flask import Flask
 from data_manager import DataManager
+from models import db, User, Movie
+import os
 
+# --- Flask App Setup ---
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///moviewebapp.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+# Create database path
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/movies.db')}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize database
 db.init_app(app)
 
-# Comment out after first use
-with app.app_context():
-    db.create_all()
-
+# Create DataManager object (pass db.sessions)
 data_manager = DataManager(db.session)
 
+# --- Routes ---
+@app.route('/')
+def home():
+    return "Welcome to MoviWeb App!"
 
-# --- User Management ---
-@app.route("/add_user", mehtods=["POST"])
-def add_user():
-    name = request.form["name"]
-    data_manager.add_user(name)
-    return redirect(url_for("list_users"))
+# Example route: Show all users
+@app.route('/users')
+def get_users():
+    users = data_manager.get_users()
+    return {u.id: u.name for u in users}
+
+# Example route: Show all movies of a user
+@app.route('/users/<int:user_id>/movies')
+def get_user_movies(user_id):
+    movies = data_manager.get_movies(user_id)
+    return {m.id: f"{m.title} ({m.year})" for m in movies}
+
+# --- Run App ---
+if __name__ == '__main__':
+    # Create the tables on first start
+    with app.app_context():
+        db.create_all()
+
+    app.run(debug=True)
+
 
 
 
