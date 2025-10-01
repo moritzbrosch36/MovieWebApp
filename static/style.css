@@ -1,8 +1,204 @@
+/* --- General Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 0;
+}
+
+/* --- Header --- */
+header {
+    background-color: #3498db;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2rem;
+}
+
+header nav {
+    margin-top: 10px;
+}
+
+header nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 40px;
+    color: #777;
+    font-size: 0.9rem;
+    background-color: #f1f1f1;
+}
+
+/* --- Headers --- */
+h1, h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 2.2rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+h3 {
+    font-size: 1.4rem;
+}
+
+/* --- Container --- */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Links --- */
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Lists --- */
+.user-list,
+.movie-list {
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+.user-entry,
+.movie-entry {
+    background: #ffffff;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Buttons --- */
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    margin-left: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #3498db;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+/* --- Forms --- */
+form {
+    margin-top: 20px;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="text"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* --- Error Messages --- */
+.error-message {
+    background: #ffe6e6;
+    color: #c0392b;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: 1px solid #e74c3c;
+}
+
+/* --- Suggestions List --- */
+.suggestions {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.suggestions li {
+    list-style-type: disc;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .user-entry,
+    .movie-entry {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    button {
+        margin-top: 5px;
+    }
+}
+
 /* --- User Grid Layout --- */
 .user-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Abstand zwischen den Kacheln */
+    gap: 20px;
     padding: 0;
     margin-top: 20px;
     justify-content: center;
@@ -17,7 +213,7 @@
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(25% - 20px); /* 4 Kacheln pro Reihe */
+    flex: 1 1 calc(25% - 20px);
     max-width: calc(25% - 20px);
     min-width: 200px;
     box-sizing: border-box;
@@ -28,7 +224,6 @@
     transform: translateY(-5px);
 }
 
-/* --- User Entry Content Styling --- */
 .user-entry h3 {
     font-size: 1.4rem;
     margin-bottom: 10px;
@@ -39,24 +234,24 @@
     color: #555;
 }
 
-/* --- Responsive: Weniger Kacheln pro Reihe --- */
+/* --- Responsive: Fewer tiles per row --- */
 @media (max-width: 1200px) {
     .user-entry {
-        flex: 1 1 calc(33.33% - 20px); /* 3 pro Reihe */
+        flex: 1 1 calc(33.33% - 20px);
         max-width: calc(33.33% - 20px);
     }
 }
 
 @media (max-width: 900px) {
     .user-entry {
-        flex: 1 1 calc(50% - 20px); /* 2 pro Reihe */
+        flex: 1 1 calc(50% - 20px);
         max-width: calc(50% - 20px);
     }
 }
 
 @media (max-width: 600px) {
     .user-entry {
-        flex: 1 1 100%; /* 1 pro Reihe */
+        flex: 1 1 100%;
         max-width: 100%;
     }
 }
