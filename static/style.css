@@ -402,34 +402,44 @@ input[type="text"]:focus {
 /* --- Movie Actions (Update + Delete side by side) --- */
 .movie-actions {
     display: flex;
-    gap: 10px; /* Abstand zwischen Update und Delete */
+    align-items: center; /* sorgt für vertikale Ausrichtung */
+    gap: 10px;
     margin-top: 10px;
 }
 
-.movie-actions form {
-    display: inline-block;
+.update-form,
+.delete-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
 }
 
-.movie-actions input[type="text"] {
-    padding: 5px;
-    margin-right: 5px;
+.update-form input[type="text"] {
+    padding: 6px;
+    height: 36px; /* gleiche Höhe wie Buttons */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
 .movie-actions button {
     padding: 6px 12px;
+    height: 36px; /* gleiche Höhe wie Eingabefeld */
     border: none;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
-}
-
-.movie-actions button:hover {
-    opacity: 0.9;
 }
 
 .delete-btn {
     background: #e74c3c;
     color: #fff;
 }
+
+.delete-btn:hover {
+    background: #c0392b;
+}
+
 
 .delete-btn:hover {
     background: #c0392b;
