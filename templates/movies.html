@@ -20,16 +20,19 @@
             <p><strong>Year:</strong> {{ movie.year }}</p>
             <p><strong>Genre:</strong> {{ movie.genre }}</p>
 
-            <!-- Update Movie -->
-            <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
-                <input type="text" name="new_title" placeholder="New Title" required>
-                <button type="submit">Update</button>
-            </form>
+            <!-- Actions (Update + Delete side by side) -->
+            <div class="movie-actions">
+                <!-- Update Movie -->
+                <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
+                    <input type="text" name="new_title" placeholder="New Title" required>
+                    <button type="submit">Update</button>
+                </form>
 
-            <!-- Delete Movie -->
-            <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
-                <button type="submit">Delete</button>
-            </form>
+                <!-- Delete Movie -->
+                <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </div>
         </div>
     </li>
     {% endfor %}
