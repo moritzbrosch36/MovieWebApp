@@ -402,45 +402,52 @@ input[type="text"]:focus {
 /* --- Movie Actions (Update + Delete side by side) --- */
 .movie-actions {
     display: flex;
-    align-items: center; /* sorgt für vertikale Ausrichtung */
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.update-form,
-.delete-form {
-    display: flex;
-    align-items: center;
+    flex-direction: column; /* Eingabefeld über Buttons */
     gap: 5px;
-    margin: 0;
 }
 
-.update-form input[type="text"] {
-    padding: 6px;
-    height: 36px; /* gleiche Höhe wie Buttons */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
+.update-delete-form {
+    display: flex;
+    flex-direction: column; /* Eingabefeld oben, Buttons darunter */
+    gap: 5px;
 }
 
-.movie-actions button {
+.button-group {
+    display: flex;
+    gap: 10px; /* Abstand zwischen Update- und Delete-Button */
+}
+
+.update-btn {
+    background-color: #3498db;
+    color: white;
     padding: 6px 12px;
-    height: 36px; /* gleiche Höhe wie Eingabefeld */
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
+.update-btn:hover {
+    background-color: #2980b9;
+}
+
 .delete-btn {
-    background: #e74c3c;
-    color: #fff;
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .delete-btn:hover {
-    background: #c0392b;
+    color: #c0392b;
 }
 
-
-.delete-btn:hover {
-    background: #c0392b;
+.update-delete-form input[type="text"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
 }

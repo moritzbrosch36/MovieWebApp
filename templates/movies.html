@@ -20,20 +20,25 @@
             <p><strong>Year:</strong> {{ movie.year }}</p>
             <p><strong>Genre:</strong> {{ movie.genre }}</p>
 
+            <!-- Update Eingabefeld -->
+            <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post" class="update-input-form">
+                <input type="text" name="new_title" placeholder="New Title" required>
+            </form>
+
+            <!-- Buttons nebeneinander -->
             <div class="movie-actions">
-                <!-- Update Movie -->
                 <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post" class="update-form">
-                    <input type="text" name="new_title" placeholder="New Title" required>
-                    <button type="submit">Update</button>
+                    <button type="submit" class="update-btn">Update</button>
                 </form>
 
-                <!-- Delete Movie -->
                 <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post" class="delete-form">
-                    <button type="submit">Delete</button>
+                    <button type="submit" class="delete-btn">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </form>
             </div>
-        </div>
 
+        </div>
     </li>
     {% endfor %}
 </ul>
