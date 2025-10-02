@@ -32,7 +32,7 @@ def create_user():
 
 @app.route('/users/<int:user_id>/movies', methods=['GET'])
 def list_user_movies(user_id):
-    user = User.query.get(user_id)
+    user = db.session.get(User, user_id)
     if not user:
         return render_template("error.html",
                                message=f"User with ID {user_id} does not exist.")
