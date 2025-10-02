@@ -7,11 +7,10 @@
 </head>
 <body>
     <header>
-        <h1>🎬 MoviWeb App</h1>
-        <nav>
-            <a href="{{ url_for('index') }}">Home</a> |
-            <a href="{{ url_for('index') }}">Users</a>
-        </nav>
+        <!-- Title now serves as home link -->
+        <h1>
+            <a href="{{ url_for('index') }}" class="home-link">🎬 MoviWeb App</a>
+        </h1>
         <hr>
     </header>
 

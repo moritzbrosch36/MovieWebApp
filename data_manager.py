@@ -18,12 +18,12 @@ class DataManager:
     # --- User Management ---
     def create_user(self, name):
         if not name.strip():
-            return {"error": "Name darf nicht leer sein."}
+            return {"error": "Name cannot be empty."}
 
         new_user = User(name=name.strip())
         self.db_session.add(new_user)
         self.db_session.commit()
-        return {"success": f"User '{name}' wurde erstellt."}
+        return {"success": f"User '{name}' was created."}
 
     def get_users(self):
         return User.query.all()
@@ -35,14 +35,14 @@ class DataManager:
     def add_movie(self, title, user_id):
         title = title.strip()
         if not title:
-            return {"error": "Filmtitel darf nicht leer sein."}
+            return {"error": "Movie title must not be empty."}
 
         url = f"{self.omdb_url}?t={title}&apikey={self.api_key}"
         try:
             response = requests.get(url, timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
-            return {"error": f"Fehler bei der Verbindung zur OMDb API: {e}"}
+            return {"error": f"Error connecting to OMDb API: {e}"}
 
         data = response.json()
 
@@ -50,7 +50,7 @@ class DataManager:
             # Vorschläge suchen
             suggestions = self.search_movie_suggestions(title)
             return {
-                "error": f"Film '{title}' nicht gefunden: {data.get('Error')}",
+                "error": f"Movie '{title}' not found: {data.get('Error')}",
                 "suggestions": suggestions
             }
 
@@ -65,34 +65,34 @@ class DataManager:
         self.db_session.add(new_movie)
         self.db_session.commit()
 
-        return {"success": f"Film '{new_movie.title}' wurde hinzugefügt."}
+        return {"success": f"Movie '{new_movie.title}' was added."}
 
     def update_movie(self, movie_id, new_title):
         movie = Movie.query.get(movie_id)
         if not movie:
-            return {"error": f"Film mit ID {movie_id} existiert nicht."}
+            return {"error": f"Movie with ID {movie_id} does not exist."}
 
         new_title = new_title.strip()
         if not new_title:
-            return {"error": "Neuer Filmtitel darf nicht leer sein."}
+            return {"error": "New movie title cannot be empty."}
 
         movie.title = new_title
         self.db_session.commit()
-        return {"success": f"Film wurde auf '{new_title}' geändert."}
+        return {"success": f"Movie changed to '{new_title}'."}
 
     def delete_movie(self, movie_id):
         movie = Movie.query.get(movie_id)
         if not movie:
-            return {"error": f"Film mit ID {movie_id} existiert nicht."}
+            return {"error": f"Movie with ID {movie_id} does not exist."}
 
         self.db_session.delete(movie)
         self.db_session.commit()
-        return {"success": f"Film '{movie.title}' wurde gelöscht."}
+        return {"success": f"Movie '{movie.title}' was deleted."}
 
     def search_movie_suggestions(self, title):
         """
-        Suche ähnliche Filme über OMDb API.
-        Gibt eine Liste mit Titeln zurück.
+        Search for similar movies using the OMDb API.
+        Returns a list of titles.
         """
         url = f"{self.omdb_url}?s={title}&apikey={self.api_key}"
         try:
