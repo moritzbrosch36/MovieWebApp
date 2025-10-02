@@ -3,11 +3,26 @@ import os
 from dotenv import load_dotenv
 from models import db, User, Movie
 
+"""
+DataManager
+Handles user and movie data operations, including interactions with the OMDb API.
+"""
+
 # .env Datei laden
 load_dotenv()
 
 class DataManager:
+    """Manages database operations and external movie API requests."""
+
     def __init__(self, db_session):
+        """
+        Initialize DataManager with a database session and OMDb API configuration.
+
+        Args:
+            db_session: SQLAlchemy database session.
+        Raises:
+            ValueError: If API_KEY or OMDB_URL is missing in .env.
+        """
         self.db_session = db_session
         self.api_key = os.getenv("API_KEY")
         self.omdb_url = os.getenv("OMDB_URL")
@@ -17,6 +32,14 @@ class DataManager:
 
     # --- User Management ---
     def create_user(self, name):
+        """
+        Create a new user with the given name.
+
+        Args:
+            name (str): User's name.
+        Returns:
+            dict: Success or error message.
+        """
         if not name.strip():
             return {"error": "Name cannot be empty."}
 
@@ -26,13 +49,36 @@ class DataManager:
         return {"success": f"User '{name}' was created."}
 
     def get_users(self):
+        """
+        Retrieve all users.
+
+        Returns:
+            list: List of User objects.
+        """
         return User.query.all()
 
     # --- Movie Management ---
     def get_movies(self, user_id):
+        """
+        Retrieve all movies for a given user.
+
+        Args:
+            user_id (int): User ID.
+        Returns:
+            list: List of Movie objects.
+        """
         return Movie.query.filter_by(user_id=user_id).all()
 
     def add_movie(self, title, user_id):
+        """
+        Add a movie to the user's list using OMDb API data.
+
+        Args:
+            title (str): Movie title.
+            user_id (int): User ID.
+        Returns:
+            dict: Success or error message with suggestions.
+        """
         title = title.strip()
         if not title:
             return {"error": "Movie title must not be empty."}
@@ -47,7 +93,6 @@ class DataManager:
         data = response.json()
 
         if data.get("Response") == "False":
-            # Vorschläge suchen
             suggestions = self.search_movie_suggestions(title)
             return {
                 "error": f"Movie '{title}' not found: {data.get('Error')}",
@@ -68,6 +113,15 @@ class DataManager:
         return {"success": f"Movie '{new_movie.title}' was added."}
 
     def update_movie(self, movie_id, new_title):
+        """
+        Update the title of an existing movie.
+
+        Args:
+            movie_id (int): Movie ID.
+            new_title (str): New movie title.
+        Returns:
+            dict: Success or error message.
+        """
         movie = Movie.query.get(movie_id)
         if not movie:
             return {"error": f"Movie with ID {movie_id} does not exist."}
@@ -81,6 +135,14 @@ class DataManager:
         return {"success": f"Movie changed to '{new_title}'."}
 
     def delete_movie(self, movie_id):
+        """
+        Delete a movie from the database.
+
+        Args:
+            movie_id (int): Movie ID.
+        Returns:
+            dict: Success or error message.
+        """
         movie = Movie.query.get(movie_id)
         if not movie:
             return {"error": f"Movie with ID {movie_id} does not exist."}
@@ -91,8 +153,12 @@ class DataManager:
 
     def search_movie_suggestions(self, title):
         """
-        Search for similar movies using the OMDb API.
-        Returns a list of titles.
+        Search for similar movie titles using the OMDb API.
+
+        Args:
+            title (str): Movie title to search for.
+        Returns:
+            list: List of suggested movie titles.
         """
         url = f"{self.omdb_url}?s={title}&apikey={self.api_key}"
         try:

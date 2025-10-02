@@ -2,8 +2,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-
 class User(db.Model):
+    """
+    Represents a user in the system.
+
+    Attributes:
+        id (int): Unique identifier for the user.
+        name (str): Name of the user.
+        movies (list): List of movies associated with the user.
+    """
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -13,10 +20,22 @@ class User(db.Model):
     movies = db.relationship("Movie", backref="user", lazy=True)
 
     def __repr__(self):
+        """Return a string representation of the User."""
         return f"<User {self.name}>"
 
 
 class Movie(db.Model):
+    """
+    Represents a movie in the system.
+
+    Attributes:
+        id (int): Unique identifier for the movie.
+        title (str): Title of the movie.
+        genre (str): Genre of the movie.
+        year (int): Release year of the movie.
+        poster (str): URL of the movie poster image.
+        user_id (int): ID of the associated user.
+    """
     __tablename__ = "movies"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -29,4 +48,5 @@ class Movie(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     def __repr__(self):
-        return f"<Movie {self.title} ({self.year}"
+        """Return a string representation of the Movie."""
+        return f"<Movie {self.title} ({self.year})>"
