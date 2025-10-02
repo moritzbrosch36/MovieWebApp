@@ -373,6 +373,7 @@ input[type="text"]:focus {
     color: #3498db;
 }
 
+/* --- About Section --- */
 .about-container {
     background: #f9f9f9;
     padding: 30px;
@@ -398,4 +399,38 @@ input[type="text"]:focus {
     font-size: 1.05em;
 }
 
+/* --- Movie Actions (Update + Delete side by side) --- */
+.movie-actions {
+    display: flex;
+    gap: 10px; /* Abstand zwischen Update und Delete */
+    margin-top: 10px;
+}
 
+.movie-actions form {
+    display: inline-block;
+}
+
+.movie-actions input[type="text"] {
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.movie-actions button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.movie-actions button:hover {
+    opacity: 0.9;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}
