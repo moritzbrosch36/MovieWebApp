@@ -6,12 +6,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>
-        <!-- Title now serves as home link -->
-        <h1>
+    <header class="navbar">
+        <h1 class="logo">
             <a href="{{ url_for('index') }}" class="home-link">🎬 MoviWeb App</a>
         </h1>
-        <hr>
+        <nav class="nav-links">
+            <!-- Beispiel-Links, du kannst sie anpassen -->
+            <a href="{{ url_for('index') }}">Users</a>
+            <a href="#">About</a>
+        </nav>
     </header>
 
     <main class="container">

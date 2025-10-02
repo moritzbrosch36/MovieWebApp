@@ -64,6 +64,11 @@ def delete_movie(user_id, movie_id):
         return render_template("error.html", message=result["error"])
     return redirect(url_for("list_user_movies", user_id=user_id))
 
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
 # --- Error Handlers ---
 @app.errorhandler(404)
 def not_found_error(error):
