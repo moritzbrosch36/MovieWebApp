@@ -375,14 +375,27 @@ input[type="text"]:focus {
 
 .about-container {
     background: #f9f9f9;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    line-height: 1.6;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    line-height: 1.8;
+    margin-top: 20px;
 }
 
 .about-container h2 {
-    margin-top: 0;
+    margin-bottom: 20px;
     color: #2c3e50;
 }
+
+.about-container h3 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+.feature-list li {
+    margin-bottom: 12px; /* mehr Abstand zwischen den Features */
+    font-size: 1.05em;
+}
+
 
