@@ -20,24 +20,21 @@
             <p><strong>Year:</strong> {{ movie.year }}</p>
             <p><strong>Genre:</strong> {{ movie.genre }}</p>
 
-            <!-- Update Eingabefeld -->
-            <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post" class="update-input-form">
+            <!-- Gemeinsames Formular für Update + Delete -->
+            <form class="update-delete-form" action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
+                <!-- Eingabefeld oben -->
                 <input type="text" name="new_title" placeholder="New Title" required>
-            </form>
 
-            <!-- Buttons nebeneinander -->
-            <div class="movie-actions">
-                <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post" class="update-form">
+                <!-- Buttons nebeneinander -->
+                <div class="button-group">
                     <button type="submit" class="update-btn">Update</button>
-                </form>
 
-                <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post" class="delete-form">
-                    <button type="submit" class="delete-btn">
+                    <!-- Delete Button mit eigener Route -->
+                    <button type="submit" formaction="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" class="delete-btn">
                         <i class="fas fa-trash"></i>
                     </button>
-                </form>
-            </div>
-
+                </div>
+            </form>
         </div>
     </li>
     {% endfor %}
