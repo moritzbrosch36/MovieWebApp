@@ -12,6 +12,7 @@ interactions with the OMDb API.
 # .env file loaded
 load_dotenv()
 
+
 class DataManager:
     """Manages database operations and external movie API requests."""
 
