@@ -11,7 +11,9 @@
             {% if movie.poster_url and movie.poster_url != "N/A" %}
                 <img src="{{ movie.poster_url }}" alt="{{ movie.title }} Poster" loading="lazy">
             {% else %}
-                <img src="{{ url_for('static', filename='no-image.png') }}" alt="No Poster Available">
+                <div class="no-poster-placeholder">
+                    No Poster
+                </div>
             {% endif %}
         </div>
 
@@ -24,14 +26,11 @@
             <form class="update-delete-form"
                   action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}"
                   method="post">
-                <!-- Input field above -->
                 <input type="text" name="new_title" placeholder="New Title">
 
-                <!-- Buttons next to each other -->
                 <div class="button-group">
                     <button type="submit" class="update-btn">Update</button>
 
-                    <!-- Delete button with own route -->
                     <button type="submit"
                             formaction="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}"
                             class="delete-btn">
