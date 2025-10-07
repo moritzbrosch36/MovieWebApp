@@ -8,7 +8,7 @@ DataManager
 Handles user and movie data operations, including interactions with the OMDb API.
 """
 
-# .env Datei laden
+# .env file loaded
 load_dotenv()
 
 class DataManager:
