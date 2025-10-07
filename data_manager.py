@@ -1,7 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
-from models import db, User, Movie
+from models import User, Movie
 
 """
 DataManager
