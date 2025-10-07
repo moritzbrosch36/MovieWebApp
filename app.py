@@ -24,7 +24,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 
-# --- Database Structure Verification ---
+# --- (Optional) Database Structure Verification ---
 def verify_db_structure():
     """
     Verify database schema and relationships.
