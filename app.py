@@ -7,7 +7,8 @@ from sqlalchemy import inspect
 
 """
 MoviWebApp
-A simple Flask web application for managing users and their favorite movies.
+A simple Flask web application for managing users and 
+their favorite movies.
 """
 
 # --- Flask App Setup ---
@@ -15,7 +16,8 @@ app = Flask(__name__)
 
 # Use the existing movies.db in the current directory
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.path.join(basedir, 'data/movies.db')}"
+app.config["SQLALCHEMY_DATABASE_URI"] = \
+    f"sqlite:///{os.path.join(basedir, 'data/movies.db')}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
@@ -24,9 +26,19 @@ db.init_app(app)
 # --- Database Structure Verification ---
 def verify_db_structure():
     """
-    Checks if the 'user' and 'movie' tables exist in the database
-    and whether the columns match the models.
-    Prints warnings to the terminal if deviations are found.
+    Verify database schema and relationships.
+
+    Ensures the database contains the required tables ('user', 'movie')
+    with the expected columns, and validates the one-to-many relationship
+    between users and movies.
+    Prints warnings for missing tables or columns, extra columns, and errors
+    encountered during verification.
+
+    Useful for debugging, migration checks, and schema validation before
+    runtime.
+
+    :return: None
+    :rtype: None
     """
     with app.app_context():
         inspector = inspect(db.engine)
@@ -98,7 +110,8 @@ def create_user():
     return redirect(url_for("index"))
 
 
-@app.route("/users/<int:user_id>/movies", methods=["GET"])
+@app.route("/users/<int:user_id>/movies",
+           methods=["GET"])
 def list_user_movies(user_id):
     """Display all movies for a given user."""
     user = db.session.get(User, user_id)
@@ -109,7 +122,8 @@ def list_user_movies(user_id):
     return render_template("movies.html", movies=movies, user=user)
 
 
-@app.route("/users/<int:user_id>/movies", methods=["POST"])
+@app.route("/users/<int:user_id>/movies",
+           methods=["POST"])
 def add_movie(user_id):
     """Add a new movie to the given user's movie list."""
     title = request.form.get("title")
@@ -121,7 +135,8 @@ def add_movie(user_id):
     return redirect(url_for("list_user_movies", user_id=user_id))
 
 
-@app.route("/users/<int:user_id>/movies/<int:movie_id>/update", methods=["POST"])
+@app.route("/users/<int:user_id>/movies/<int:movie_id>/update",
+           methods=["POST"])
 def update_movie(user_id, movie_id):
     """Update the title of a movie for the given user."""
     new_title = request.form.get("new_title")
@@ -131,7 +146,8 @@ def update_movie(user_id, movie_id):
     return redirect(url_for("list_user_movies", user_id=user_id))
 
 
-@app.route("/users/<int:user_id>/movies/<int:movie_id>/delete", methods=["POST"])
+@app.route("/users/<int:user_id>/movies/<int:movie_id>/delete",
+           methods=["POST"])
 def delete_movie(user_id, movie_id):
     """Delete a movie from the given user's list."""
     result = data_manager.delete_movie(movie_id)

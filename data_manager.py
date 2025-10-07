@@ -5,7 +5,8 @@ from models import db, User, Movie
 
 """
 DataManager
-Handles user and movie data operations, including interactions with the OMDb API.
+Handles user and movie data operations, including 
+interactions with the OMDb API.
 """
 
 # .env file loaded
@@ -16,7 +17,8 @@ class DataManager:
 
     def __init__(self, db_session):
         """
-        Initialize DataManager with a database session and OMDb API configuration.
+        Initialize DataManager with a database session and
+        OMDb API configuration.
         """
         self.db_session = db_session
         self.api_key = os.getenv("API_KEY")

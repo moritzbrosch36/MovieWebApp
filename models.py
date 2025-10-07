@@ -33,7 +33,7 @@ class Movie(db.Model):
         title (str): Title of the movie.
         year (int): Release year of the movie.
         director (str): Director of the movie.
-        poster (str): URL of the movie poster image.
+        poster_url (str): URL of the movie poster image.
         user_id (int): ID of the associated user.
     """
     __tablename__ = "movie"
