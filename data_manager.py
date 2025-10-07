@@ -17,11 +17,6 @@ class DataManager:
     def __init__(self, db_session):
         """
         Initialize DataManager with a database session and OMDb API configuration.
-
-        Args:
-            db_session: SQLAlchemy database session.
-        Raises:
-            ValueError: If API_KEY or OMDB_URL is missing in .env.
         """
         self.db_session = db_session
         self.api_key = os.getenv("API_KEY")
@@ -32,14 +27,7 @@ class DataManager:
 
     # --- User Management ---
     def create_user(self, name):
-        """
-        Create a new user with the given name.
-
-        Args:
-            name (str): User's name.
-        Returns:
-            dict: Success or error message.
-        """
+        """Create a new user with the given name."""
         if not name.strip():
             return {"error": "Name cannot be empty."}
 
@@ -49,36 +37,16 @@ class DataManager:
         return {"success": f"User '{name}' was created."}
 
     def get_users(self):
-        """
-        Retrieve all users.
-
-        Returns:
-            list: List of User objects.
-        """
+        """Retrieve all users."""
         return User.query.all()
 
     # --- Movie Management ---
     def get_movies(self, user_id):
-        """
-        Retrieve all movies for a given user.
-
-        Args:
-            user_id (int): User ID.
-        Returns:
-            list: List of Movie objects.
-        """
+        """Retrieve all movies for a given user."""
         return Movie.query.filter_by(user_id=user_id).all()
 
     def add_movie(self, title, user_id):
-        """
-        Add a movie to the user's list using OMDb API data.
-
-        Args:
-            title (str): Movie title.
-            user_id (int): User ID.
-        Returns:
-            dict: Success or error message with suggestions.
-        """
+        """Add a movie to the user's list using OMDb API data."""
         title = title.strip()
         if not title:
             return {"error": "Movie title must not be empty."}
@@ -101,9 +69,9 @@ class DataManager:
 
         new_movie = Movie(
             title=data.get("Title", "Unknown"),
-            genre=data.get("Genre", "Unknown"),
-            year=data.get("Year", "Unknown"),
-            poster=data.get("Poster", ""),
+            year=data.get("Year", None),
+            director=data.get("Director", "Unknown"),
+            poster_url=data.get("Poster", ""),
             user_id=user_id
         )
 
@@ -113,15 +81,7 @@ class DataManager:
         return {"success": f"Movie '{new_movie.title}' was added."}
 
     def update_movie(self, movie_id, new_title):
-        """
-        Update the title of an existing movie.
-
-        Args:
-            movie_id (int): Movie ID.
-            new_title (str): New movie title.
-        Returns:
-            dict: Success or error message.
-        """
+        """Update the title of an existing movie."""
         movie = Movie.query.get(movie_id)
         if not movie:
             return {"error": f"Movie with ID {movie_id} does not exist."}
@@ -135,14 +95,7 @@ class DataManager:
         return {"success": f"Movie changed to '{new_title}'."}
 
     def delete_movie(self, movie_id):
-        """
-        Delete a movie from the database.
-
-        Args:
-            movie_id (int): Movie ID.
-        Returns:
-            dict: Success or error message.
-        """
+        """Delete a movie from the database."""
         movie = Movie.query.get(movie_id)
         if not movie:
             return {"error": f"Movie with ID {movie_id} does not exist."}
@@ -152,14 +105,7 @@ class DataManager:
         return {"success": f"Movie '{movie.title}' was deleted."}
 
     def search_movie_suggestions(self, title):
-        """
-        Search for similar movie titles using the OMDb API.
-
-        Args:
-            title (str): Movie title to search for.
-        Returns:
-            list: List of suggested movie titles.
-        """
+        """Search for similar movie titles using the OMDb API."""
         url = f"{self.omdb_url}?s={title}&apikey={self.api_key}"
         try:
             response = requests.get(url, timeout=5)

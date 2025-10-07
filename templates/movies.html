@@ -8,8 +8,8 @@
     {% for movie in movies %}
     <li class="movie-entry">
         <div class="movie-poster">
-            {% if movie.poster and movie.poster != "N/A" %}
-                <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster" loading="lazy">
+            {% if movie.poster_url and movie.poster_url != "N/A" %}
+                <img src="{{ movie.poster_url }}" alt="{{ movie.title }} Poster" loading="lazy">
             {% else %}
                 <img src="{{ url_for('static', filename='no-image.png') }}" alt="No Poster Available">
             {% endif %}
@@ -18,11 +18,13 @@
         <div class="movie-details">
             <h3>{{ movie.title }}</h3>
             <p><strong>Year:</strong> {{ movie.year }}</p>
-            <p><strong>Genre:</strong> {{ movie.genre }}</p>
+            <p><strong>Director:</strong> {{ movie.director }}</p>
 
             <!-- Common form for update + delete -->
-            <form class="update-delete-form" action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
-                <!-- Eingabefeld oben -->
+            <form class="update-delete-form"
+                  action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}"
+                  method="post">
+                <!-- Input field above -->
                 <input type="text" name="new_title" placeholder="New Title">
 
                 <!-- Buttons next to each other -->
@@ -30,7 +32,9 @@
                     <button type="submit" class="update-btn">Update</button>
 
                     <!-- Delete button with own route -->
-                    <button type="submit" formaction="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" class="delete-btn">
+                    <button type="submit"
+                            formaction="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}"
+                            class="delete-btn">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
