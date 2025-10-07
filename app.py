@@ -16,13 +16,16 @@ their favorite movies.
 # --- Flask App Setup ---
 app = Flask(__name__)
 
+
 # Use the existing movies.db in the current directory
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config["SQLALCHEMY_DATABASE_URI"] = \
     f"sqlite:///{os.path.join(basedir, 'data/movies.db')}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+
 db.init_app(app)
+
 
 # --- (Optional) Database Structure Verification ---
 def verify_db_structure():
@@ -87,12 +90,14 @@ def verify_db_structure():
 
         print("\n--- Database verification complete ---\n")
 
+
 # --- Data Manager ---
 with app.app_context():
     """
     verify_db_structure()  # Automatically verify at startup (optional)
     """
     data_manager = DataManager(db.session)
+
 
 # --- Routes ---
 @app.route("/")
@@ -203,6 +208,7 @@ def inject_year():
     Inject the current year into all templates.
     """
     return {"year": datetime.now().year}
+
 
 # --- Run App ---
 if __name__ == "__main__":
