@@ -211,4 +211,4 @@ def inject_year():
 # --- Run App ---
 if __name__ == "__main__":
     # Start the Flask application in debug mode.
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True)
